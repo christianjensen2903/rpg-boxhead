@@ -287,10 +287,10 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_jr5n5"]
-radius = 60.0083
+radius = 2698.08
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_cyspf"]
-size = Vector2(12, 6.5)
+[sub_resource type="CircleShape2D" id="CircleShape2D_ur3xa"]
+radius = 6.0
 
 [node name="enemy" type="CharacterBody2D"]
 y_sort_enabled = true
@@ -309,8 +309,8 @@ collision_mask = 2
 shape = SubResource("CircleShape2D_jr5n5")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -1.75)
-shape = SubResource("RectangleShape2D_cyspf")
+position = Vector2(0, -3)
+shape = SubResource("CircleShape2D_ur3xa")
 
 [connection signal="body_entered" from="detection_area" to="." method="_on_detection_area_body_entered"]
 [connection signal="body_exited" from="detection_area" to="." method="_on_detection_area_body_exited"]
