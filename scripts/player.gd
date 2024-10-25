@@ -1,65 +1,59 @@
 extends CharacterBody2D
 
-
 const SPEED = 100
 var current_dir = "none"
 
-func _physics_process(delta: float) -> void:
-	player_movement(delta)
-	
-	
-func _ready():
+func _ready() -> void:
 	$AnimatedSprite2D.play("front_idle")
-	
-func player_movement(delta: float) -> void:
-	
-	velocity.x = 0
-	velocity.y = 0
 
-	if Input.is_action_pressed("ui_right"):
-		current_dir = "right"
-		play_anim(1)
-		velocity.x = SPEED
-	elif Input.is_action_pressed("ui_left"):
-		current_dir = "left"
-		play_anim(1)
-		velocity.x = -SPEED
-	elif Input.is_action_pressed("ui_down"):
-		current_dir = "down"
-		play_anim(1)
-		velocity.y = SPEED
-	elif Input.is_action_pressed("ui_up"):
-		current_dir = "up"
-		play_anim(1)
-		velocity.y = -SPEED
-	else:
-		play_anim(0)
+func _physics_process(delta: float) -> void:
+	handle_movement()
+
+func handle_movement() -> void:
+	# Reset velocity and detect movement direction
+	velocity = Vector2.ZERO
+	detect_direction()
+
+	# Normalize the velocity to maintain consistent speed when moving diagonally
+	if velocity != Vector2.ZERO:
+		velocity = velocity.normalized() * SPEED
 		
 	move_and_slide()
+
+func detect_direction() -> void:
+	# Check for input and set direction and velocity
 	
 	
-func play_anim(movement: int):
-	var dir = current_dir
-	var anim = $AnimatedSprite2D
-	
-	if dir == "left":
-		anim.flip_h = true
+	if Input.is_action_pressed("ui_down"):
+		velocity.y += SPEED
+		current_dir = "down"
+	elif Input.is_action_pressed("ui_up"):
+		velocity.y -= SPEED
+		current_dir = "up"
+		
+	if Input.is_action_pressed("ui_right"):
+		velocity.x += SPEED
+		current_dir = "right"
+	elif Input.is_action_pressed("ui_left"):
+		velocity.x -= SPEED
+		current_dir = "left"
+
+	# Choose animation based on movement
+	if velocity != Vector2.ZERO:
+		play_animation(true)
 	else:
-		anim.flip_h = false
-	
-	if dir == "right" or dir == "left":
-		if movement == 1:
-			anim.play("side_walk")
-		elif movement == 0:
-			anim.play("side_idle")
-	elif dir == "down":
-		if movement == 1:
-			anim.play("front_walk")
-		elif movement == 0:
-			anim.play("front_idle")
-	elif dir == "up":
-		if movement == 1:
-			anim.play("back_walk")
-		elif movement == 0:
-			anim.play("back_idle")
-			
+		play_animation(false)
+
+func play_animation(moving: bool) -> void:
+	var anim = $AnimatedSprite2D
+
+	# Set flip based on left/right direction
+	anim.flip_h = current_dir == "left"
+
+	# Play side walk animations for horizontal and diagonal movement, others based on direction
+	if current_dir in ["right", "left"]:
+		anim.play("side_walk" if moving else "side_idle")
+	elif current_dir == "down":
+		anim.play("front_walk" if moving else "front_idle")
+	elif current_dir == "up":
+		anim.play("back_walk" if moving else "back_idle")
