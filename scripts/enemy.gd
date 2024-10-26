@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-const SPEED = 40
+const SPEED = 10
 const DIRECTION_UPDATE_DELAY = 0.2  # Delay in seconds before updating direction
 
 var player
@@ -48,15 +48,11 @@ func update_animation_direction(direction: Vector2) -> void:
 			current_dir = "down"
 		else:
 			current_dir = "up"
-	
-	# Play the corresponding animation
-	if current_dir == "right":
-		anim_sprite.flip_h = false
+	anim_sprite.flip_h = current_dir == "left"
+
+	# Play side walk animations for horizontal and diagonal movement, others based on direction
+	if current_dir in ["right", "left", "down"]:
 		anim_sprite.play("side_walk")
-	elif current_dir == "left":
-		anim_sprite.flip_h = true
-		anim_sprite.play("side_walk")
-	elif current_dir == "down":
-		anim_sprite.play("front_walk")
 	elif current_dir == "up":
 		anim_sprite.play("back_walk")
+		

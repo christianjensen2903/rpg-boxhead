@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-const SPEED = 100
+const SPEED = 50
 var current_dir = "none"
 
 func _ready() -> void:
@@ -30,7 +30,6 @@ func detect_direction() -> void:
 	elif Input.is_action_pressed("ui_up"):
 		velocity.y -= SPEED
 		current_dir = "up"
-		
 	if Input.is_action_pressed("ui_right"):
 		velocity.x += SPEED
 		current_dir = "right"
@@ -51,9 +50,7 @@ func play_animation(moving: bool) -> void:
 	anim.flip_h = current_dir == "left"
 
 	# Play side walk animations for horizontal and diagonal movement, others based on direction
-	if current_dir in ["right", "left"]:
+	if current_dir in ["right", "left", "down"]:
 		anim.play("side_walk" if moving else "side_idle")
-	elif current_dir == "down":
-		anim.play("front_walk" if moving else "front_idle")
 	elif current_dir == "up":
 		anim.play("back_walk" if moving else "back_idle")
