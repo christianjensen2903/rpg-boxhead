@@ -1,9 +1,26 @@
-[gd_scene load_steps=64 format=3 uid="uid://dx3u8dfortptv"]
+[gd_scene load_steps=73 format=3 uid="uid://dx3u8dfortptv"]
 
 [ext_resource type="Script" path="res://scripts/enemy.gd" id="1_bvxdj"]
+[ext_resource type="Texture2D" uid="uid://bt34cm47sj6cs" path="res://art/sprites/characters/Undead/Zombie/ZombieDmg.png" id="2_o7t5o"]
 [ext_resource type="Texture2D" uid="uid://cwvlon4334ika" path="res://art/sprites/characters/Undead/Zombie/ZombieIdle.png" id="2_qpsw7"]
 [ext_resource type="Texture2D" uid="uid://b005d7qbtsy7" path="res://art/sprites/characters/Undead/Zombie/ZombieWalk.png" id="3_kpou3"]
 [ext_resource type="Texture2D" uid="uid://bd6tkerlyl24j" path="res://art/sprites/characters/Undead/Zombie/ZombieDie.png" id="4_yik6f"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yrru7"]
+atlas = ExtResource("2_o7t5o")
+region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gkuwd"]
+atlas = ExtResource("2_o7t5o")
+region = Rect2(32, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kuo5q"]
+atlas = ExtResource("2_o7t5o")
+region = Rect2(64, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rxhxv"]
+atlas = ExtResource("2_o7t5o")
+region = Rect2(96, 64, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mkklx"]
 atlas = ExtResource("2_qpsw7")
@@ -141,6 +158,22 @@ region = Rect2(288, 0, 32, 32)
 atlas = ExtResource("4_yik6f")
 region = Rect2(320, 0, 32, 32)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_00ca5"]
+atlas = ExtResource("2_o7t5o")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ka4kr"]
+atlas = ExtResource("2_o7t5o")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tgap7"]
+atlas = ExtResource("2_o7t5o")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4dnu3"]
+atlas = ExtResource("2_o7t5o")
+region = Rect2(96, 0, 32, 32)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_osj2u"]
 atlas = ExtResource("2_qpsw7")
 region = Rect2(0, 0, 32, 32)
@@ -235,6 +268,23 @@ region = Rect2(96, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_0ujd0"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yrru7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gkuwd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kuo5q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rxhxv")
+}],
+"loop": true,
+"name": &"back_hurt",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_mkklx")
@@ -354,6 +404,23 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_00ca5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ka4kr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tgap7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4dnu3")
+}],
+"loop": true,
+"name": &"side_hurt",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_osj2u")
 }, {
 "duration": 1.0,
@@ -440,10 +507,9 @@ y_sort_enabled = true
 script = ExtResource("1_bvxdj")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(1, -3)
+position = Vector2(1, -2)
 sprite_frames = SubResource("SpriteFrames_0ujd0")
-animation = &"back_idle"
-frame_progress = 0.303513
+animation = &"back_hurt"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -1)
