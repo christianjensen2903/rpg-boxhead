@@ -2,7 +2,9 @@ extends CharacterBody2D
 
 const SPEED = 50
 const ATTACK_DURATION = 0.5 # Attack duration in seconds
-var current_dir = "none"
+var down = false
+var right = false
+
 var attacking = false
 var attack_timer = 0.0
 
@@ -35,20 +37,19 @@ func detect_direction() -> void:
 	
 	if Input.is_action_pressed("ui_down"):
 		velocity.y += SPEED
-		current_dir = "down"
+		down = true
 	elif Input.is_action_pressed("ui_up"):
 		velocity.y -= SPEED
-		current_dir = "up"
+		down = false
 	if Input.is_action_pressed("ui_right"):
 		velocity.x += SPEED
-		current_dir = "right"
+		right = true
 	elif Input.is_action_pressed("ui_left"):
 		velocity.x -= SPEED
-		current_dir = "left"
+		right = false
 
 	# Trigger attack if the attack button is pressed
 	if Input.is_action_just_pressed("ui_accept"):
-		print("test")
 		start_attack()
 		return
 
@@ -62,12 +63,12 @@ func play_animation(moving: bool) -> void:
 	var anim = $AnimatedSprite2D
 
 	# Set flip based on left/right direction
-	anim.flip_h = current_dir == "left"
+	anim.flip_h = !right
 
 	# Play side walk animations for horizontal and diagonal movement, others based on direction
-	if current_dir in ["right", "left", "down"]:
+	if down:
 		anim.play("side_walk" if moving else "side_idle")
-	elif current_dir == "up":
+	else:
 		anim.play("back_walk" if moving else "back_idle")
 
 func start_attack() -> void:
@@ -80,7 +81,7 @@ func play_attack_animation() -> void:
 	var anim = $AnimatedSprite2D
 
 	# Choose the attack animation based on direction
-	if current_dir in ["right", "left", "down"]:
+	if down:
 		anim.play("side_attack")
-	elif current_dir == "up":
+	else:
 		anim.play("back_attack")

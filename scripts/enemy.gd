@@ -4,7 +4,8 @@ const SPEED = 10
 const DIRECTION_UPDATE_DELAY = 0.2  # Delay in seconds before updating direction
 
 var player
-var current_dir = "down" # Default direction
+var down = false
+var right = false
 var anim_sprite
 var last_direction_update_time = 0.0  # Tracks time since the last direction update
 
@@ -38,21 +39,14 @@ func handle_movement() -> void:
 
 func update_animation_direction(direction: Vector2) -> void:
 	# Determine the main direction
-	if abs(direction.x) > abs(direction.y):
-		if direction.x > 0:
-			current_dir = "right"
-		else:
-			current_dir = "left"
-	else:
-		if direction.y > 0:
-			current_dir = "down"
-		else:
-			current_dir = "up"
-	anim_sprite.flip_h = current_dir == "left"
+	right = direction.x > 0
+	down = direction.y > 0
+	
+	anim_sprite.flip_h = !right
 
 	# Play side walk animations for horizontal and diagonal movement, others based on direction
-	if current_dir in ["right", "left", "down"]:
+	if down:
 		anim_sprite.play("side_walk")
-	elif current_dir == "up":
+	else:
 		anim_sprite.play("back_walk")
 		
